@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="postgresql," />
+  <meta name="keywords" content="xgboost,word2vex,machine learning," />
 
 
 
@@ -87,21 +87,16 @@
 
 
 
-<meta name="description" content="We need to find all distinct original_run_date in a table named as recon_t; Original I use distinct query which is:
-1SELECT DISTINCT original_run_date FROM recon_t where cust_id=5126 and original_run_">
+<meta name="description" content="BackgroundAnomaly detection (also outlier detection) is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset[^fn1]. In payment re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PostgreSQL query comparision( recursive CTE vs distinct )">
-<meta property="og:url" content="http://yoursite.com/2017/04/12/PostgreSQL-query-comparision-recursive-CTE-vs-distinct/index.html">
+<meta property="og:title" content="Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec">
+<meta property="og:url" content="http://yoursite.com/2017/07/17/reconciliation-audit/index.html">
 <meta property="og:site_name" content="琐忆">
-<meta property="og:description" content="We need to find all distinct original_run_date in a table named as recon_t; Original I use distinct query which is:
-1SELECT DISTINCT original_run_date FROM recon_t where cust_id=5126 and original_run_">
-<meta property="og:image" content="http://yoursite.com/images/performance_comparision.png">
-<meta property="og:updated_time" content="2017-07-17T04:06:49.857Z">
+<meta property="og:description" content="BackgroundAnomaly detection (also outlier detection) is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset[^fn1]. In payment re">
+<meta property="og:updated_time" content="2017-08-13T17:04:02.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PostgreSQL query comparision( recursive CTE vs distinct )">
-<meta name="twitter:description" content="We need to find all distinct original_run_date in a table named as recon_t; Original I use distinct query which is:
-1SELECT DISTINCT original_run_date FROM recon_t where cust_id=5126 and original_run_">
-<meta name="twitter:image" content="http://yoursite.com/images/performance_comparision.png">
+<meta name="twitter:title" content="Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec">
+<meta name="twitter:description" content="BackgroundAnomaly detection (also outlier detection) is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset[^fn1]. In payment re">
 
 
 
@@ -129,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/12/PostgreSQL-query-comparision-recursive-CTE-vs-distinct/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/17/reconciliation-audit/"/>
 
 
 
 
 
-  <title> PostgreSQL query comparision( recursive CTE vs distinct ) | 琐忆 </title>
+  <title> Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec | 琐忆 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +249,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/12/PostgreSQL-query-comparision-recursive-CTE-vs-distinct/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/reconciliation-audit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yellowspring">
@@ -275,7 +270,7 @@
             
             
               
-                PostgreSQL query comparision( recursive CTE vs distinct )
+                Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec
               
             
           </h1>
@@ -290,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T19:31:14+01:00">
-                2017-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-17T04:43:21+01:00">
+                2017-07-17
               </time>
             
 
@@ -326,27 +321,9 @@
       
 
       
-        <p>We need to find all distinct original_run_date in a table named as recon_t; Original I use distinct query which is:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> original_run_date <span class="keyword">FROM</span> recon_t <span class="keyword">where</span> cust_id=<span class="number">5126</span> <span class="keyword">and</span> original_run_date <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">NULL</span>;</div></pre></td></tr></table></figure>
-<p>But this query is very slow. So I start to use recursive Common Table Expression(CTE) to do the same task.</p>
-<h2 id="Common-Table-Expressions-also-called-as-with-query"><a href="#Common-Table-Expressions-also-called-as-with-query" class="headerlink" title="Common Table Expressions (also called as: with query)"></a>Common Table Expressions (also called as: <strong>with query</strong>)</h2><p>WITH provides a way to write auxiliary statements for use in a larger query.<br>These statements, which are often referred to as Common Table Expressions or CTEs, can be thought of as defining temporary tables that exist just for one query.<br>Each auxiliary statement in a WITH clause can be a SELECT, INSERT, UPDATE, or DELETE;<br>And the WITH clause itself is attached to a primary statement that can also be a SELECT, INSERT, UPDATE, or DELETE. </p>
-<p>I found this <a href="http://www.postgresqltutorial.com/postgresql-recursive-query/" target="_blank" rel="external">tutorial</a> is quite helpful.<br><a href="https://www.essentialsql.com/recursive-ctes-explained/" target="_blank" rel="external">Recursive CTEs Explained</a> is another good tutorial. </p>
-<p>Concretely, the main idea is:</p>
-<ol>
-<li>Execute non-recursive Statement and store the result into R<sub>0</sub></li>
-<li>Repeatedly execute recursive statement, every time it will use the result executed from previous round as input, which we name it as R<sub>i</sub>, And save the returned results as R<sub>i+1</sub></li>
-<li>After multiple repeated rounds, the input is null(that’s why we need to add checking condition the input is not null), the loop will be ended. </li>
-</ol>
-<p>My new query is written as:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">WITH RECURSIVE vin AS (</div><div class="line">(<span class="keyword">SELECT</span> <span class="keyword">max</span>(original_run_date) <span class="keyword">as</span> original_run_date <span class="keyword">FROM</span> recon_t <span class="keyword">WHERE</span> cust_id=<span class="number">5126</span> <span class="keyword">and</span> original_run_date <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">null</span>) </div><div class="line"><span class="keyword">UNION</span></div><div class="line">( <span class="keyword">SELECT</span> </div><div class="line">   (<span class="keyword">SELECT</span> <span class="keyword">max</span>(r.original_run_date) <span class="keyword">FROM</span> recon_t <span class="keyword">AS</span> r <span class="keyword">WHERE</span> r.cust_id=<span class="number">5126</span> <span class="keyword">AND</span> r.original_run_date &lt; v.original_run_date <span class="keyword">AND</span> r.original_run_date <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>) </div><div class="line">  <span class="keyword">FROM</span> vin <span class="keyword">AS</span> v <span class="keyword">WHERE</span> v.original_run_date <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span></div><div class="line">)</div><div class="line">)</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span>  vin <span class="keyword">WHERE</span> original_run_date <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NUll</span></div></pre></td></tr></table></figure>
-<h2 id="Query-plan-comparison"><a href="#Query-plan-comparison" class="headerlink" title="Query plan comparison"></a>Query plan comparison</h2><p>We run two queries and analyze the performance.<br>Before we start the test, we have already create two indexes named <strong>recon_id_first_delivery_indx btree (cust_id, first_delivery_date)</strong>, and <strong>recon_id_vintage_indx btree (cust_id, original_run_date)</strong>.<br>The result is shown in the following:<br><img src="/images/performance_comparision.png" width="100%" height="%100" align="center"> </p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The distinct query didn’t use recon_id_vintage_indx but using recon_id_first_delivery_indx at the beginning, then using bitmap heap scan to find all distinct <strong>original_run_date</strong>. </p>
-<p>On the other side, recursive CTE is using <strong>recon_id_vintage_indx</strong> to implement index scan.</p>
-<p>The real result is amazing. Recursive CTE is <strong>150</strong> times faster than distint query. But as I understand, CTE only works well when the queried column has small distinct values.<br>If most of the values are different, probably the two queries have the same level time cost. </p>
-<p>Here bitmap heap scan is actually like a global seq scan which is very slow comparing to index scan. A little bit explaination by Tom Lane</p>
-<blockquote>
-<p>A plain indexscan fetches one tuple-pointer at a time from the index,<br>and immediately visits that tuple in the table.  A bitmap scan fetches<br>all the tuple-pointers from the index in one go, sorts them using an<br>in-memory “bitmap” data structure, and then visits the table tuples in<br>physical tuple-location order.  The bitmap scan improves locality of<br>reference to the table at the cost of more bookkeeping overhead to<br>manage the “bitmap” data structure — and at the cost that the data<br>is no longer retrieved in index order, which doesn’t matter for your<br>query but would matter if you said ORDER BY.  </p>
-</blockquote>
+        <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p><strong>Anomaly detection</strong> (also outlier detection) is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset[^fn1]. In payment reconciliation system, specialists will set up the status for all reconciled accounts. For instance, the status could be set as <strong><em>Paid</em></strong> if the system received positive payment and <strong><em>Denied</em></strong> if the payer rejected the payment request. In some scenario, due to logic defects, human mistakes or program failure, the status is not set up correctly. To find these accounts with wrong status, is in fact an anomaly detection problem.  </p>
+<h2 id="Anomaly-detection-based-on-Boosting-Tree"><a href="#Anomaly-detection-based-on-Boosting-Tree" class="headerlink" title="Anomaly detection based on Boosting Tree"></a>Anomaly detection based on Boosting Tree</h2><p>Essentially anomaly detection is a classification problem in machine learning world. We will build a classification model and predict all accouts’ status(class). Any accounts with different predicted status and real status would be reported for auditing. Currently the popular classification methods include SVM, logistic regression, boosting tree, etc.. I pick up boosting tree here since its performance has been proved bette than most of other methods.</p>
+<h3 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h3><p>[^fn1]:Chandola, V.; Banerjee, A.; Kumar, V. (2009). “Anomaly detection: A survey”. ACM Computing Surveys. 41 (3): 1–58. doi:10.1145/1541880.1541882</p>
 
       
     </div>
@@ -376,7 +353,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+            <a href="/tags/xgboost/" rel="tag"># xgboost</a>
+          
+            <a href="/tags/word2vex/" rel="tag"># word2vex</a>
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
           
         </div>
       
@@ -389,8 +370,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/29/Notes-on-PyMC-installation/" rel="next" title="Notes on PyMC installation">
-                <i class="fa fa-chevron-left"></i> Notes on PyMC installation
+              <a href="/2017/04/12/PostgreSQL-query-comparision-recursive-CTE-vs-distinct/" rel="next" title="PostgreSQL query comparision( recursive CTE vs distinct )">
+                <i class="fa fa-chevron-left"></i> PostgreSQL query comparision( recursive CTE vs distinct )
               </a>
             
           </div>
@@ -399,8 +380,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/17/reconciliation-audit/" rel="prev" title="Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec">
-                Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/13/sync-hexo-on-multiple-pc/" rel="prev" title="sync hexo on multiple PCs">
+                sync hexo on multiple PCs <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -521,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Common-Table-Expressions-also-called-as-with-query"><span class="nav-number">1.</span> <span class="nav-text">Common Table Expressions (also called as: with query)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Query-plan-comparison"><span class="nav-number">2.</span> <span class="nav-text">Query plan comparison</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anomaly-detection-based-on-Boosting-Tree"><span class="nav-number">2.</span> <span class="nav-text">Anomaly detection based on Boosting Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Boosting-Tree"><span class="nav-number">2.1.</span> <span class="nav-text">Boosting Tree</span></a></li></ol></li></ol></div>
             
 
           </div>

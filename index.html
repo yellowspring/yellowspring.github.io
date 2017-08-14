@@ -247,6 +247,274 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/13/sync-hexo-on-multiple-pc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yellowspring">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="琐忆">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/13/sync-hexo-on-multiple-pc/" itemprop="url">
+                  sync hexo on multiple PCs
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-13T20:07:15+01:00">
+                2017-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Install-hexo-on-second-Pc"><a href="#Install-hexo-on-second-Pc" class="headerlink" title="Install hexo on second Pc"></a>Install hexo on second Pc</h1><ul>
+<li>install git</li>
+<li><p>install node</p>
+<p><strong> if you use apt-get install, please run:  sudo ln -s /usr/bin/nodejs /usr/bin/node </strong></p>
+</li>
+<li><p>install hexo</p>
+<p><strong> npm install -g hexo-cli </strong></p>
+</li>
+<li><p>create folder my_blog (mkdir my_blog)</p>
+</li>
+<li><p>initialize folder </p>
+<p><strong> cd my_blog </strong></p>
+<p><strong> hexo init </strong></p>
+</li>
+<li><p>remove everything under this folder </p>
+</li>
+<li>copy old folder’s content to this folder</li>
+</ul>
+<h1 id="Install-Dropbox"><a href="#Install-Dropbox" class="headerlink" title="Install Dropbox"></a>Install Dropbox</h1><p>I installed 64-bit dropbox</p>
+<p><code>cd ~ &amp;&amp; wget -O - &quot;https://www.dropbox.com/download?plat=lnx.x86_64&quot; | tar xzf -</code></p>
+<p>Next, run the Dropbox daemon from the newly created .dropbox-dist folder.</p>
+<p><code>~/.dropbox-dist/dropboxd</code></p>
+<p>At last I create a symbolic link<br><code>ln -s ~/my_blog ~/Dropbox/blog</code></p>
+<h1 id="Create-new-page"><a href="#Create-new-page" class="headerlink" title="Create new page"></a>Create new page</h1><p><code>hexo new filename</code></p>
+<p>After completing the new post, we can run<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g --watch</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/reconciliation-audit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yellowspring">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="琐忆">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/17/reconciliation-audit/" itemprop="url">
+                  Anomaly Detection in Payment Reconciliation A Practical Examle of XGBoost and Word2Vec
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-17T04:43:21+01:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p><strong>Anomaly detection</strong> (also outlier detection) is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset[^fn1]. In payment reconciliation system, specialists will set up the status for all reconciled accounts. For instance, the status could be set as <strong><em>Paid</em></strong> if the system received positive payment and <strong><em>Denied</em></strong> if the payer rejected the payment request. In some scenario, due to logic defects, human mistakes or program failure, the status is not set up correctly. To find these accounts with wrong status, is in fact an anomaly detection problem.  </p>
+<h2 id="Anomaly-detection-based-on-Boosting-Tree"><a href="#Anomaly-detection-based-on-Boosting-Tree" class="headerlink" title="Anomaly detection based on Boosting Tree"></a>Anomaly detection based on Boosting Tree</h2><p>Essentially anomaly detection is a classification problem in machine learning world. We will build a classification model and predict all accouts’ status(class). Any accounts with different predicted status and real status would be reported for auditing. Currently the popular classification methods include SVM, logistic regression, boosting tree, etc.. I pick up boosting tree here since its performance has been proved bette than most of other methods.</p>
+<h3 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h3><p>[^fn1]:Chandola, V.; Banerjee, A.; Kumar, V. (2009). “Anomaly detection: A survey”. ACM Computing Surveys. 41 (3): 1–58. doi:10.1145/1541880.1541882</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/12/PostgreSQL-query-comparision-recursive-CTE-vs-distinct/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -566,7 +834,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T04:39:49+01:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T04:43:21+01:00">
                 2017-03-29
               </time>
             
@@ -703,7 +971,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -716,7 +984,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
